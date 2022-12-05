@@ -20,7 +20,7 @@ double squareRoot(double value) {
 	double l = 0;
 	double r = 1e4;
 	while (r - l > 0.000000001) {
-		double m = (r - l) / 2;
+		double m = (r + l) / 2;
 		if (value - m * m >= 0.000000001) {
 			l = m;
 		}

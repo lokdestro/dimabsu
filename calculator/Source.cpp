@@ -4,7 +4,7 @@ using std::cout;
 std::map<std::string, void(*)()> selects{ {"defoult",defoult} };
 
 int main() {
-	//while (1) {
+	while (1) {
 		cout << "choose the mode\n";
 		std::string s;
 		cin >> s;
@@ -16,6 +16,6 @@ int main() {
 		}
 		//selects["defoult"]
 		//cout << selects.count(s);
-	//}
+	}
 	return 0;
 }
