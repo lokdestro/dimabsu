@@ -128,9 +128,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="defoult.h" />
+    <ClInclude Include="functions.h" />
+    <ClInclude Include="scientific.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="defoult.cpp" />
+    <ClCompile Include="functions.cpp" />
+    <ClCompile Include="sientific.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
