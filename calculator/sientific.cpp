@@ -15,7 +15,7 @@ double mysin(double value) {
 	double res = 0;
 	int k = 1;
 	bool IsMinus = 0;
-	while (myabs(cur - prev) > 0.0000001){
+	while (myabs(cur - prev) > 0.0000001) {
 		if (IsMinus)
 			res -= cur;
 		else
@@ -28,13 +28,12 @@ double mysin(double value) {
 	}
 	return res;
 }
-
 //ряд тейлора
 double mycos(double value) {
 	double cur = 1;
 	double prev = 0;
 	double res = 0;
-	int k = 1;
+	int k = 0;
 	bool IsMinus = 0;
 	while (myabs(cur - prev) > 0.0000001) {
 		if (IsMinus)
@@ -49,6 +48,8 @@ double mycos(double value) {
 	}
 	return res;
 }
+
+
 double mytg(double value) {
 	return mysin(value) / mycos(value);
 }
@@ -70,14 +71,16 @@ double mysh(double value) {
 		k++;
 	}
 	return res;
-}
 
+	//double val = PowToNaturalDegree(value,2.718);
+	//return (val - 1 / val) / 2;
+}
 //ряд тейлора
 double mych(double value) {
 	double cur = 1;
 	double prev = 0;
 	double res = 0;
-	int k = 1;
+	int k = 0;
 	while (myabs(cur - prev) > 0.0000001) {
 		res += cur;
 		prev = cur;
@@ -86,7 +89,12 @@ double mych(double value) {
 		k++;
 	}
 	return res;
+
+	//double val = PowToNaturalDegree(value, 2.718);
+	//return (val + 1 / val) / 2;
 }
+
+
 double mythx(double value) {
 	return mysh(value) / mych(value);
 }
@@ -106,50 +114,42 @@ double mycsch(double value) {
 	return 1 / mysh(value);
 }
 
-//ряд тейлора
+//бинпоиск
 double myarcsin(double value) {
-	double cur = value * value * value;
-	double prev = value;
-	int k = 1;
-	double ans = value;
-	while (myabs(cur - prev) > 0.000000001) {
-		prev = cur;
-		cur = cur * k / (k + 1);
-		ans = ans + cur / (k + 2);
-		cur *= value * value;
-		k += 2;
-		//std::cout << prev << " " << cur << "\n";
+	double l = -3.14 / 2;
+	double r = 3.14 / 2;
+	while (r - l > 0.00001) {
+		double m = (r + l) / 2;
 
+		if (mysin(m) >= value) {
+			r = m;
+		}
+		else {
+			l = m;
+		}
 	}
-	return ans;
+	return r;
 }
 double myarccos(double value) {
-	if(value < 0)
+	if (value < 0)
 		return 3.14 / 2 + myarcsin(value);    //pi
 	return 3.14 / 2 - myarcsin(value);    //pi
 }
 
-//ряд тейлора
 double myarctg(double value) {
-	double cur = value;
-	double prev = 0;
-	double res = 0;
-	int k = 1;
-	bool IsMinus = 0;
-	while (myabs(cur / k - prev / (k - 2)) > 0.0000001) {
-		if (IsMinus)
-			res -= cur / k;
-		else
-			res += cur / k;
-		IsMinus = !IsMinus;
-		prev = cur;
-		cur = cur * value * value;
-		k++;
-		k++;
+	double l = -3.14 / 2;
+	double r = 3.14 / 2;
+	while (r - l > 0.00001) {
+		double m = (r + l) / 2;
+		if (mytg(m) >= value) {
+			std::cout << m << mytg(m) << value << "\n";
+			r = m;
+		}
+		else {
+			l = m;
+		}
 	}
-	if (value < 0)
-		return 0 - res; //проверить
-	return res;
+	return r;
 }
 double myarcctg(double value) {
 	if (value < 0) {
@@ -160,36 +160,39 @@ double myarcctg(double value) {
 double myarcsec(double value) {
 	return myarccos(1 / value);
 }
-double arccosec(double value) {
+double myarccsc(double value) {
 	return myarcsin(1 / value);
 }
 
-//ряд тейлора
+//бинпоиск
 double myarcsh(double value) {
-	double cur = value * value * value;
-	double prev = value;
-	int k = 1;
-	double ans = value;
-	bool IsMinus = 1;
-	while (myabs(cur - prev) > 0.000000001) {
-		prev = cur;
-		cur = cur * k / (k + 1);
-		if (IsMinus) {
-			ans = ans - cur / (k + 2);
+	double l = -1e4;
+	double r = 1e4;
+	while (r - l > 0.00001) {
+		double m = (r + l) / 2;
+
+		if (mysh(m) >= value) {
+			r = m;
 		}
 		else {
-			ans = ans + cur / (k + 2);
+			l = m;
 		}
-		IsMinus = !IsMinus;
-		cur *= value * value;
-		k += 2;
-		//std::cout << prev << " " << cur << "\n";
-
 	}
-	return ans;
+	return r;
 }
 double myarcch(double value) {
-	
+	double l = 0;
+	double r = 7;
+	while (r - l > 0.0001) {
+		double m = (r + l) / 2;
+		if (mych(m) > value) {
+			r = m;
+		}
+		else {
+			l = m;
+		}
+	}
+	return l;
 }
 //ряд тейлора
 double myarcthx(double value) {
@@ -206,5 +209,76 @@ double myarcthx(double value) {
 	}
 	if (value < 0)
 		return 0 - res; //проверить
+	return res;
+}
+
+
+
+double myarccsch(double value) {		   //arcschx = arsh(1/x)
+	return myarcsh(1 / value);
+}
+double myarcsech(double value) {           //arsechx = arcch(1/x)
+	return myarcch(1 / value);
+}
+double myarccthx(double value) {
+	return myarcthx(1 / value);
+}
+
+double FindRoot(double value, int degree) {
+	double l = 0;
+	double r = value;
+	//std::cout << l << " " << r << "\n";
+	while (r - l > 0.00000001) {
+		double m = (r + l) / 2;
+		double cur = PowToNaturalDegree(degree, m);
+		//std::cout << cur << "\n";
+		if (cur >= value) {
+			//std::cout <<l << " " <<  m << " " << r << "\n";
+			r = m;
+		}
+		else {
+			l = m;
+		}
+	}
+	return r;
+}
+
+double RoundDown(double value) {
+	return (int)value;
+}
+double RoundUp(double value) {
+	return (int)value + 1;
+}
+double Round(double value) {
+	double value2 = RoundDown(value);
+	if (value - value2 >= 0.5)
+		return RoundUp(value);
+	return value2;
+}
+//n!
+double Fact(int value) {
+	return factorial(value);
+}
+
+
+double myln(double value) {
+	value--;
+	int k = 2;
+	double res = value;
+	double cur = value * value;
+	double prev = value;
+	//std::cout << value << "\n";
+	while (myabs(cur / k - prev / (k - 1)) > 0.00000001) {
+		std::cout << prev / (k - 1) << " " << cur / k << " " << res << "\n";
+		if (k & 1) {
+			res += cur / k;
+		}
+		else {
+			res -= cur / k;
+		}
+		prev = cur;
+		k++;
+		cur = cur * value;
+	}
 	return res;
 }

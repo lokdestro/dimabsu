@@ -1,5 +1,5 @@
 #include "functions.h"
-
+#include<iostream>
 double PowToNaturalDegree(int degree, int value) {
 	int res = 1;
 	while (degree) {
@@ -11,12 +11,13 @@ double PowToNaturalDegree(int degree, int value) {
 	return res;
 }
 double PowToNaturalDegree(int degree, double value) {
+	//std::cout << value << " " << degree << "\n";
 	if (degree == 0)
 		return 1;
 	if (degree % 2 == 1)
-		return PowToNaturalDegree(value, degree - 1) * value;
+		return PowToNaturalDegree(degree - 1, value) * value;
 	else {
-		int b = PowToNaturalDegree(value, degree / 2);
+		int b = PowToNaturalDegree(degree / 2, value);
 		return b * b;
 	}
 }

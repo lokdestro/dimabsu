@@ -1,5 +1,6 @@
 #include "defoult.h"
 #include "scientific.h"
+#include<iomanip>
 using std::cin;
 using std::cout;
 std::map<std::string, void(*)()> selects{ {"defoult",defoult} };
@@ -17,6 +18,7 @@ int main() {
 	//		cout << "wrong mode";
 	//	}
 	//}
-	cout << myarctg(1);
+	//cout << std::setprecision(20) << myarcch(1);
+	//cout << mych(0);
 	return 0;
 }
