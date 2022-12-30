@@ -3,10 +3,16 @@
 #include <iostream>
 using std::cin;
 using std::cout;
-std::map<std::string, double(*)(double)> operationsun{ {"sqr",square},{"sqrt",squareRoot} };
-std::map<std::string, double(*)(double, double)> operationsbin{ {"+",add}, {"*",multiplication}, {"-",minus},{"/",division} };
+std::map<std::string, double(*)(double)> operationsun{ {"sqr",calculator::square},{"sqrt",calculator::squareRoot},{"inverse",calculator::inverseElement} };
+std::map<std::string, double(*)(double, double)> operationsbin{ {"+",calculator::add}, {"*",calculator::multiplication}, {"-",calculator::minus},{"/",calculator::division} };
 void defaultcalc() {
 	std::cout << "chose the operation\n";
+	for (auto i : operationsun) {
+		cout << i.first << "\n";
+	}
+	for (auto i : operationsbin) {
+		cout << i.first << "\n";
+	}
 	std::string s;
 	std::cin >> s;
 	if (operationsbin.count(s)) {

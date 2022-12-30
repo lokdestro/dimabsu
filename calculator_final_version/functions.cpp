@@ -29,7 +29,7 @@ double calculator::squareRoot(double value) {
 	}
 	return l;
 }
-double calculator::reverseElement(double value) {
+double calculator::inverseElement(double value) {
 	return 1 / value;
 }
 
@@ -68,13 +68,13 @@ double calculator::myabs(double value) {
 }
 
 //ряд тейлора
-double calculator::mysin(double value) {
+double calculator::mysin(double value,double eps) {
 	double cur = value;
 	double prev = 0;
 	double res = 0;
 	int k = 1;
 	bool IsMinus = 0;
-	while (myabs(cur - prev) > 0.0000001) {
+	while (calculator::myabs(cur - prev) > eps) {
 		if (IsMinus)
 			res -= cur;
 		else
@@ -88,13 +88,13 @@ double calculator::mysin(double value) {
 	return res;
 }
 //ряд тейлора
-double calculator::mycos(double value) {
+double calculator::mycos(double value, double eps) {
 	double cur = 1;
 	double prev = 0;
 	double res = 0;
 	int k = 0;
 	bool IsMinus = 0;
-	while (calculator::myabs(cur - prev) > 0.0000001) {
+	while (calculator::myabs(cur - prev) > eps) {
 		if (IsMinus)
 			res -= cur;
 		else
@@ -109,20 +109,20 @@ double calculator::mycos(double value) {
 }
 
 
-double calculator::mytg(double value) {
-	return mysin(value) / mycos(value);
+double calculator::mytg(double value,double eps) {
+	return calculator::mysin(value, eps) / calculator::mycos(value, eps);
 }
-double calculator::myctg(double value) {
-	return mycos(value) / mysin(value);
+double calculator::myctg(double value, double eps) {
+	return calculator::mycos(value,eps) / calculator::mysin(value,eps);
 }
 
 //ряд тейлора
-double calculator::mysh(double value) {
+double calculator::mysh(double value, double eps) {
 	double cur = value;
 	double prev = 0;
 	double res = 0;
 	int k = 1;
-	while (myabs(cur - prev) > 0.0000001) {
+	while (calculator::myabs(cur - prev) > 0.0000001) {
 		res += cur;
 		prev = cur;
 		cur = cur * value * value / (k + 1) / (k + 2);
@@ -135,12 +135,12 @@ double calculator::mysh(double value) {
 	//return (val - 1 / val) / 2;
 }
 //ряд тейлора
-double calculator::mych(double value) {
+double calculator::mych(double value, double eps) {
 	double cur = 1;
 	double prev = 0;
 	double res = 0;
 	int k = 0;
-	while (myabs(cur - prev) > 0.0000001) {
+	while (calculator::myabs(cur - prev) > 0.0000001) {
 		res += cur;
 		prev = cur;
 		cur = cur * value * value / (k + 1) / (k + 2);
@@ -154,33 +154,33 @@ double calculator::mych(double value) {
 }
 
 
-double calculator::mythx(double value) {
-	return mysh(value) / mych(value);
+double calculator::mythx(double value, double eps) {
+	return calculator::mysh(value,eps) / calculator::mych(value,eps);
 }
-double calculator::mycthx(double value) {
-	return mych(value) / mysh(value);
+double calculator::mycthx(double value, double eps) {
+	return calculator::mych(value,eps) / calculator::mysh(value,eps);
 }
-double calculator::mysec(double value) {
-	return 1 / mycos(value);
+double calculator::mysec(double value, double eps) {
+	return 1 / calculator::mycos(value,eps);
 }
-double calculator::mycsc(double value) {
-	return 1 / mysin(value);
+double calculator::mycsc(double value, double eps) {
+	return 1 / calculator::mysin(value,eps);
 }
-double calculator::mysech(double value) {
-	return 1 / mych(value);
+double calculator::mysech(double value, double eps) {
+	return 1 / calculator::mych(value,eps);
 }
-double calculator::mycsch(double value) {
-	return 1 / mysh(value);
+double calculator::mycsch(double value, double eps) {
+	return 1 / calculator::mysh(value,eps);
 }
 
 //бинпоиск
-double calculator::myarcsin(double value) {
+double calculator::myarcsin(double value, double eps) {
 	double l = -3.14 / 2;
 	double r = 3.14 / 2;
 	while (r - l > 0.00001) {
 		double m = (r + l) / 2;
 
-		if (mysin(m) >= value) {
+		if (calculator::mysin(m,eps) >= value) {
 			r = m;
 		}
 		else {
@@ -189,18 +189,18 @@ double calculator::myarcsin(double value) {
 	}
 	return r;
 }
-double calculator::myarccos(double value) {
+double calculator::myarccos(double value, double eps) {
 	if (value < 0)
-		return 3.14 / 2 + myarcsin(value);    //pi
-	return 3.14 / 2 - myarcsin(value);    //pi
+		return 3.14 / 2 + calculator::myarcsin(value,eps);    //pi
+	return 3.14 / 2 - calculator::myarcsin(value,eps);    //pi
 }
 
-double calculator::myarctg(double value) {
+double calculator::myarctg(double value, double eps) {
 	double l = -3.14 / 2;
 	double r = 3.14 / 2;
 	while (r - l > 0.00001) {
 		double m = (r + l) / 2;
-		if (mytg(m) >= value) {
+		if (calculator::mytg(m,eps) >= value) {
 			r = m;
 		}
 		else {
@@ -209,27 +209,27 @@ double calculator::myarctg(double value) {
 	}
 	return r;
 }
-double calculator::myarcctg(double value) {
+double calculator::myarcctg(double value, double eps) {
 	if (value < 0) {
-		return 3.14 / 2 + myarctg(value); //проаерить
+		return 3.14 / 2 + calculator::myarctg(value,eps); //проаерить
 	}
-	return 3.14 / 2 - myarctg(value);
+	return 3.14 / 2 - calculator::myarctg(value,eps);
 }
-double calculator::myarcsec(double value) {
-	return myarccos(1 / value);
+double calculator::myarcsec(double value, double eps) {
+	return calculator::myarccos(1 / value,eps);
 }
-double calculator::myarccsc(double value) {
-	return myarcsin(1 / value);
+double calculator::myarccsc(double value, double eps) {
+	return calculator::myarcsin(1 / value,eps);
 }
 
 //бинпоиск
-double calculator::myarcsh(double value) {
+double calculator::myarcsh(double value, double eps) {
 	double l = -1e4;
 	double r = 1e4;
 	while (r - l > 0.00001) {
 		double m = (r + l) / 2;
 
-		if (mysh(m) >= value) {
+		if (calculator::mysh(m,eps) >= value) {
 			r = m;
 		}
 		else {
@@ -238,12 +238,12 @@ double calculator::myarcsh(double value) {
 	}
 	return r;
 }
-double calculator::myarcch(double value) {
+double calculator::myarcch(double value, double eps) {
 	double l = 0;
 	double r = 7;
 	while (r - l > 0.0001) {
 		double m = (r + l) / 2;
-		if (mych(m) > value) {
+		if (calculator::mych(m,eps) > value) {
 			r = m;
 		}
 		else {
@@ -253,12 +253,12 @@ double calculator::myarcch(double value) {
 	return l;
 }
 //ряд тейлора
-double calculator::myarcthx(double value) {
+double calculator::myarcthx(double value, double eps) {
 	double cur = value;
 	double prev = 0;
 	double res = 0;
 	int k = 1;
-	while (myabs(cur / k - prev / (k - 2)) > 0.0000001) {
+	while (calculator::myabs(cur / k - prev / (k - 2)) > 0.0000001) {
 		res += cur / k;
 		prev = cur;
 		cur = cur * value * value;
@@ -272,14 +272,14 @@ double calculator::myarcthx(double value) {
 
 
 
-double calculator::myarccsch(double value) {		   //arcschx = arsh(1/x)
-	return myarcsh(1 / value);
+double calculator::myarccsch(double value, double eps) {		   //arcschx = arsh(1/x)
+	return calculator::myarcsh(1 / value,eps);
 }
-double calculator::myarcsech(double value) {           //arsechx = arcch(1/x)
-	return myarcch(1 / value);
+double calculator::myarcsech(double value, double eps) {           //arsechx = arcch(1/x)
+	return calculator::myarcch(1 / value,eps);
 }
-double calculator::myarccthx(double value) {
-	return myarcthx(1 / value);
+double calculator::myarccthx(double value, double eps) {
+	return calculator::myarcthx(1 / value,eps);
 }
 
 double calculator::FindRoot(double value, int degree) {
@@ -353,19 +353,19 @@ int calculator::And(int val1, int val2) {
 int calculator::NAND(int val1, int val2) {
 	return ~(val1 & val2);
 }
-int calculator::Or(bool val1, bool val2) {
+bool calculator::Or(bool val1, bool val2) {
 	return (val1 || val2);
 }
-int calculator::Xor(bool val1, bool val2) {
+bool calculator::Xor(bool val1, bool val2) {
 	return (val1 ^ val2);
 }
-int calculator::Not(bool value) {
+bool calculator::Not(bool value) {
 	return !value;
 }
-int calculator::And(bool val1, bool val2) {
+bool calculator::And(bool val1, bool val2) {
 	return (val1 && val2);
 }
-int calculator::NAND(bool val1, bool val2) {
+bool calculator::NAND(bool val1, bool val2) {
 	return !(val1 && val2);
 }
 

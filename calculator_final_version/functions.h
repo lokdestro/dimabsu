@@ -8,7 +8,7 @@ namespace calculator {
 	double minus(double, double);
 	double square(double);
 	double squareRoot(double);
-	double reverseElement(double);
+	double inverseElement(double);
 	double division(double, double);
 
 	double myabs(double value);
@@ -17,34 +17,34 @@ namespace calculator {
 	double PowToNaturalDegree(int degree, int value);
 
 	// trig functions
-	double mysin(double value);
-	double mycos(double value);
-	double mytg(double value);
-	double myctg(double value);
-	double mycsc(double value);
-	double mysec(double value);
+	double mysin(double value,double eps);
+	double mycos(double value, double eps);
+	double mytg(double value, double eps);
+	double myctg(double value, double eps);
+	double mycsc(double value, double eps);
+	double mysec(double value, double eps);
 
-	double myarcsin(double value);
-	double myarccos(double value);
-	double myarctg(double value);
-	double myarcctg(double value);
-	double myarccsc(double value);
-	double myarcsec(double value);
+	double myarcsin(double value, double eps);
+	double myarccos(double value, double eps);
+	double myarctg(double value, double eps);
+	double myarcctg(double value, double eps);
+	double myarccsc(double value, double eps);
+	double myarcsec(double value, double eps);
 
 
-	double mysh(double value);
-	double mych(double value);
-	double mythx(double value);
-	double mycthx(double value);
-	double mycsch(double value);
-	double mysech(double value);
+	double mysh(double value, double eps);
+	double mych(double value, double eps);
+	double mythx(double value, double eps);
+	double mycthx(double value, double eps);
+	double mycsch(double value, double eps);
+	double mysech(double value, double eps);
 
-	double myarcsh(double value);
-	double myarcch(double value);
-	double myarccthx(double value);
-	double myarcthx(double value);
-	double myarccsch(double value);
-	double myarcsech(double value);
+	double myarcsh(double value, double eps);
+	double myarcch(double value, double eps);
+	double myarccthx(double value, double eps);
+	double myarcthx(double value, double eps);
+	double myarccsch(double value, double eps);
+	double myarcsech(double value, double eps);
 
 	//math functions
 	double FindRoot(double value, int degree);
@@ -63,11 +63,11 @@ namespace calculator {
 	int Not(int value);
 	int And(int val1, int val2);
 	int NAND(int val1, int val2);
-	int Or(bool val1, bool val2);
-	int Xor(bool val1, bool val2);
-	int Not(bool value);
-	int And(bool val1, bool val2);
-	int NAND(bool val1, bool val2);
+	bool Or(bool val1, bool val2);
+	bool Xor(bool val1, bool val2);
+	bool Not(bool value);
+	bool And(bool val1, bool val2);
+	bool NAND(bool val1, bool val2);
 
 
 	std::string FromDecToK(int value, int k); // перевод в систему счисления с основанием к < 37
